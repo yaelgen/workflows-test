@@ -17,34 +17,12 @@ import mlrun
 
 
 def setup(project: mlrun.projects.MlrunProject) -> mlrun.projects.MlrunProject:
-    project.set_function(
-        name="prep-data",
-        func="prep_data.py",
-        kind="job",
-        handler="prep_data",
-    )
-
-    project.set_function(
-        name="gen-iris",
-        func="gen_iris.py",
-        kind="job",
-        handler="iris_generator",
-    )
-
-    project.set_function("hub://auto-trainer", "auto-trainer")
-    project.set_function("hub://v2-model-server", "serving")
-    project.set_function("hub://describe")
 
     project.set_function(
         name="fail-fn",
         func="fail_function.py",
         kind="job",
         handler="fail",
-    )
-
-    project.log_artifact(
-        "data",
-        target_path="https://s3.wasabisys.com/iguazio/data/iris/iris.data.raw.csv",
     )
 
     return project
