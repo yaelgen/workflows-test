@@ -1,0 +1,31 @@
+kind: project
+metadata:
+  name: pipe
+spec:
+  description: test
+  params:
+    label_column: label
+  functions:
+  - url: fail_function.py
+    name: fail-fn
+    image: mlrun/mlrun
+    handler: fail
+    with_repo: true
+    requirements:
+    - requests
+  workflows:
+  - name: failflow
+    path: ./failflow.py
+    engine: kfp
+  artifacts:
+  - kind: artifact
+    metadata:
+      project: pipe
+      key: data
+    spec:
+      target_path: https://s3.wasabisys.com/iguazio/data/iris/iris.data.raw.csv
+  source: ./
+  subpath: ''
+  origin_url: ''
+  load_source_on_run: true
+  desired_state: online
